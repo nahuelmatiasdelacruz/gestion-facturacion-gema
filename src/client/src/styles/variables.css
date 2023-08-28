@@ -1,0 +1,11 @@
+:root{
+    --mainGreen: #476C48ff;
+    --semiWhite: #E7FDFEff;
+    --secondGreen: #577454ff;
+    --mainBlue: #0283BDff;
+    --white: #FDFDFCff;
+
+    /* Fonts */
+    --mainFont: 'Manrope', sans-serif;
+    --secondFont: 'Inter', sans-serif;
+}

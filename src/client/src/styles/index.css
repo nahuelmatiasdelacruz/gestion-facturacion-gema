@@ -1,0 +1,226 @@
+@import "./variables.css";
+*{
+  font-family: var(--mainFont);
+}
+body{
+  background-color: var(--mainBlue);
+  padding: 0;
+  margin: 0;
+}
+#root{
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.main-app{
+  margin-top: 4px;
+  box-sizing: border-box;
+  width: 99%;
+  height: 99vh;
+  background-color: var(--white);
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+/* Header */
+.header{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.company-card{
+  display: flex;
+  align-items: center;
+}
+.company-card img{
+  width: 170px;
+}
+
+.menu{
+  width: 700px;
+  display: flex;
+  justify-content: center;
+}
+.menu button{
+  font-family: var(--mainFont);
+  font-size: 16px;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 15px;
+  background-color: var(--white);
+  color: var(--mainBlue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color .1s ease, transform .1s ease, color .1s ease, box-shadow .1s ease;
+}
+.menu button span{
+  margin-left: 10px;
+}
+.menu button:hover{
+  background-color: var(--mainBlue);
+  color: var(--white);
+  transform: scale(1.07);
+  box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.menu button.current{
+  background-color: var(--mainBlue);
+  color: var(--white);
+  transform: scale(1.07);
+  box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+}
+.login-component{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../img/LoginBackground.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.login-component *{
+  font-family: var(--mainFont);
+}
+.login-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  height: 70%;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 0px 15px -3px rgba(0, 0, 0, 0.825);
+}
+.login-form img{
+  width: 60%;
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+.login-form .inputs-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 50%;
+  height: 30%;
+}
+.inputs-container input{
+  padding: 16px 19px;
+  border: 1px solid rgba(71, 108, 72, 0.257);
+  border-radius: 10px;
+  transition: transform .1s;
+}
+.inputs-container input:focus{
+  outline: none;
+  border: 1px solid #476c48;
+  transform: scale(1.06);
+}
+.login-form .loading-button{
+  padding: 16px 19px;
+  width: 50%;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--mainGreen);
+  color: white;
+  text-transform: uppercase;
+  box-shadow: 0px 0px 15px -3px rgba(0, 0, 0, 0.439);
+  transition: transform .2s;
+}
+.login-form .loading-button-l{
+  padding: 5px;
+  width: 50%;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #476c4892;
+}
+.login-form .loading-button:hover{
+  cursor: pointer;
+  transform: rotate(180deg);
+  transform: scale(1.1);
+}
+.loading-button-l img{
+  width: 19%;
+  box-sizing: border-box;
+  margin: 0;
+}
+.loading-button-l:hover{
+  cursor: not-allowed;
+}
+.content-profile{
+  box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 15px;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-header{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.profile-header .profile-header-img{
+  width: 12%;
+  box-sizing: border-box;
+}
+.client-title, .client-cuit, .client-data{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.client-title h4, .client-cuit h4, .client-data h4{
+  margin: 0;
+  color: var(--mainBlue);
+  font-weight: 100;
+}
+/* Client header */
+
+.profile-data-header{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+.profile-data-header img.loading{
+  width: 10%;
+}
+.profile-data-header img{
+  max-width: 15%;
+}
+.title-helper{
+  text-align: center;
+  color: var(--mainBlue);
+}
+
+/* Lista clientes */
+.lista-clientes{
+  width: 100%;
+  height: 100%;
+}
+.main-content{
+  height: 95%;
+}
+.content{
+  height: 90%;
+}
+.facturas-tabla{
+  height: 100%;
+}
