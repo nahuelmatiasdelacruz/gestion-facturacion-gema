@@ -9,7 +9,7 @@ const processInvoice = async (invoiceData) => {
         const fileName = invoiceData.fullDocument.origin;
         const invoice = {
             ...invoiceData.fullDocument,
-            cuit: parseInt(invoiceData.fullDocument.cuit.replace(/[^0-9]/g, ""))
+            cuit: invoiceData.fullDocument.cuit || ""
         }
         console.log("Datos de la factura: ");
         console.log(invoice);

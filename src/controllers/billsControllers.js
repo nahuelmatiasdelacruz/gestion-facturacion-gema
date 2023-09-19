@@ -20,7 +20,6 @@ const getRendicionNro = async () => {
         if (lastCheck) {
             const lastParts = lastCheck.rendicionNro.split("-");
             let newPart2 = parseInt(lastParts[1]) + 1;
-            console.log(lastParts);
             if (newPart2 > 999999) {
                 newPart2 = 1;
                 lastParts[0] = (parseInt(lastParts[0]) + 1)
@@ -100,6 +99,30 @@ const getPending = async (req, res) => {
 const addBill = async (req, res) => {};
 const updateBill = async (req, res) => {
     const { date, remito, numeroBoca, cuit, id } = req.body;
+    try{
+        const currentInvoice = await Invoice.findById(new ObjectId(id));
+        const prevCuit = currentInvoice.cuit;
+        const nextCuit = parseInt(cuit);
+        if(prevCuit !== nextCuit){
+            const prevPath = path.join(__dirname,"..","..","..","facturas_procesadas",prevCuit.toString(),currentInvoice.rutaArchivo);
+            const nextPath = path.join(__dirname,"..","..","..","facturas_procesadas",nextCuit.toString());
+            const nextPathWithFileName = path.join(__dirname,"..","..","..","facturas_procesadas",nextCuit.toString(),currentInvoice.rutaArchivo)
+            if (!fs.existsSync(nextPath)) {
+                try {
+                    fs.mkdirSync(nextPath);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            try{
+                fs.renameSync(prevPath,nextPathWithFileName);
+            }catch(e){
+
+            }
+        }
+    }catch(e){
+        console.log(e);
+    }
     try {
         await Invoice.findByIdAndUpdate(new ObjectId(id), {
             remito,
@@ -114,6 +137,7 @@ const updateBill = async (req, res) => {
             .status(500)
             .json({ msg: "Hubo un error al actualizar la factura" });
     }
+    res.json({});
 };
 const deleteBill = async (req, res) => {
     const { id } = req.params;
@@ -273,21 +297,31 @@ const downloadBill = async (req, res) => {
             invoice.rutaArchivo
         );
     }
-    try {
-        res.download(filePath, invoice.rutaArchivo, (err) => {
-            if (err) {
-                console.log(err.message);
-                return res
-                    .status(500)
-                    .json({ msg: "Hubo un error al descargar el archivo" });
-            }
-        });
-    } catch (e) {
-        console.log(e.message);
-        return res
-            .status(500)
-            .json({ msg: "Hubo un error al descargar el archivo" });
-    }
+    res.download(filePath, invoice.rutaArchivo,(e)=>{
+        if(e){
+            const directorio = path.join(__dirname,"..","..","..","facturas_procesadas");
+            fs.readdir(directorio,(e,archivos)=>{
+                const foundFile = false;
+                if(e){
+                    console.log("HUBO UN ERROR DENTRO DE LA LECTURA DEL DIRECTORIO");
+                    return;
+                }
+                archivos.forEach((folderName)=>{
+                    const filePath = path.join(__dirname,"..","..","..","facturas_procesadas",folderName);
+                    const fileToCheck = path.join(filePath,invoice.rutaArchivo);
+                    fs.access(fileToCheck,fs.constants.F_OK,(err)=>{
+                        if(!err){
+                            console.log("Se encontró el archivo en la carpeta: " + filePath);
+                            console.log("Nombre del archivo: " + invoice.rutaArchivo);
+                            const newPath = path.join(__dirname,"..","..","..","facturas_procesadas",invoice.cuit.toString(),invoice.rutaArchivo);
+                            fs.renameSync(fileToCheck,newPath);
+                            console.log("Se ha movido el archivo con éxito");
+                        }
+                    })
+                });
+            })
+        }
+    });
 };
 const startCheck = async (req, res) => {
     let pdfData = {};
